@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   add_message.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acazuc <acazuc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/20 16:43:37 by acazuc            #+#    #+#             */
-/*   Updated: 2016/01/20 18:08:11 by acazuc           ###   ########.fr       */
+/*   Created: 2016/01/20 18:23:45 by acazuc            #+#    #+#             */
+/*   Updated: 2016/01/20 18:27:52 by acazuc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
+#include "minichat.h"
 
-# include "message_list.h"
-# include "caps.h"
-
-typedef struct		s_env
+void	add_message(t_env *env, t_message *message)
 {
-	t_message_list	*messages;
-	t_caps			*caps;
-	char			*input;
-}					t_env;
+	t_message_list	*item;
+	t_message_list	*list;
 
-#endif
+	if (!(item = malloc(sizeof(*item))))
+		quit("Failed to malloc new message list item");
+	item->message = message;
+	item->next = NULL;
+	list = env->messages;
+	if (!list)
+		env->messages = item;
+	else
+	{
+		while (list->next)
+			list = list->next;
+		list->next = item;
+	}
+}

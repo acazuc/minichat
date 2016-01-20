@@ -6,7 +6,7 @@
 /*   By: acazuc <acazuc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/20 16:26:23 by acazuc            #+#    #+#             */
-/*   Updated: 2016/01/20 17:49:17 by acazuc           ###   ########.fr       */
+/*   Updated: 2016/01/20 18:44:17 by acazuc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,12 @@ int		main(void)
 		quit("Failed to malloc env");
 	if (!(env->caps = malloc(sizeof(*env->caps))))
 		quit("Failed to malloc env caps");
+	env->messages = NULL;
+	if (!(env->input = ft_memalloc(1)))
+		quit("Failed to malloc new input");
 	init_caps(env->caps);
 	terminal_catch_mode();
-	/*ft_putstr(env->caps->fullscreen_start);
+	ft_putstr(env->caps->fullscreen_start);
 	ft_putstr(env->caps->clear);
 	ft_putstr(env->caps->stand_start);
 	ft_putstr(env->caps->bold_start);
@@ -37,23 +40,25 @@ int		main(void)
 		ft_putchar('-');
 		i++;
 	}
-	ft_putstr(env->caps->stand_end);*/
+	ft_putstr(env->caps->stand_end);
 	fcntl(0, F_SETFL, fcntl(0, F_GETFL) | O_NONBLOCK);
 	int t = 0;
 	int rd;
-	while (t < 5)
+	while (t < 50)
 	{
+		ft_bzero(buffer, 20);
 		while ((rd = read(0, buffer, 20)) < 1)
 		{
+			if (errno != EAGAIN && errno != EWOULDBLOCK)
+				quit("Error on stdin read");
 			//check tcp
+			//check resize
 		}
-		ft_putnbr(rd);
-		ft_putchar(' ');
-		ft_putendl(buffer);
+		ft_putstr(buffer);
 		t++;
 	}
 	fcntl(0, F_SETFL, fcntl(0, F_GETFL) & ~O_NONBLOCK);
-	//ft_putstr(env->caps->fullscreen_end);
+	ft_putstr(env->caps->fullscreen_end);
 	terminal_normal_mode();
 	return (0);
 }

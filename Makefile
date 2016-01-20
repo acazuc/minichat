@@ -6,7 +6,7 @@
 #    By: acazuc <acazuc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/25 06:50:12 by acazuc            #+#    #+#              #
-#    Updated: 2016/01/20 17:11:10 by acazuc           ###   ########.fr        #
+#    Updated: 2016/01/20 18:45:48 by acazuc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,8 @@ SRCS_NAME = main.c \
 			init_caps.c \
 			window_size.c \
 			set_cursor_position.c \
+			add_message.c \
+			print_input.c \
 
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
 
